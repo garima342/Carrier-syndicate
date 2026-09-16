@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Company Registration — InternHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- LEFT: brand / dossier cover -->
+  <div class="brand-panel">
+    <div class="brand-top">
+      <div class="brand-row">
+        <div class="logo-mark">IH</div>
+        <div class="registry-stamp" aria-hidden="true">
+          <span>Company<br>Registry</span>
+        </div>
+      </div>
+      <div class="brand-name">InternHub for employers</div>
+      <h1 class="brand-headline">Open your company's hiring record.</h1>
+      <p class="brand-sub">One verified profile lets your recruiters post roles, review applicants, and manage your internship pipeline.</p>
+    </div>
+
+    <ol class="ledger-list">
+      <li><span class="ledger-num">01</span><span>Company &amp; legal details — CIN, GST, industry, size</span></li>
+      <li><span class="ledger-num">02</span><span>Recruiter or HR contact who will manage the account</span></li>
+      <li><span class="ledger-num">03</span><span>Registered company address</span></li>
+      <li><span class="ledger-num">04</span><span>Set a password and verify your email with an OTP</span></li>
+    </ol>
+
+    <div class="brand-foot">Already registered? <a href="login.php?role=company">Sign in to your account</a></div>
+  </div>
+
+  <!-- RIGHT: form -->
+  <div class="form-panel">
+    <div class="form-wrap">
+      <div class="form-eyebrow">Employer onboarding</div>
+      <h2 class="form-title">Register your company</h2>
+      <p class="form-desc">Takes about 5 minutes. Fields marked with an asterisk are required.</p>
+
+      <div id="formStatus" class="form-status" style="display:none;" role="status"></div>
+
+      <form id="registerForm" action="register.php" method="POST" enctype="multipart/form-data" novalidate>
+
+        <div class="logo-upload">
+          <div class="logo-box" id="logoBox">Upload</div>
+          <div class="logo-upload-text">
+            <div class="t1">Company logo</div>
+            <div class="t2">PNG or JPG, up to 2MB</div>
+          </div>
+        </div>
+        <input type="file" id="logoInput" name="company_logo" accept=".jpg,.jpeg,.png" hidden>
+
+        <div class="section">
+          <div class="section-head"><span class="section-num">01</span><h3>Company details</h3></div>
+
+          <div class="field">
+            <label for="company_name">Company name *</label>
+            <input type="text" id="company_name" name="company_name" placeholder="Acme Technologies Pvt. Ltd." required>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="company_type">Company type *</label>
+              <select id="company_type" name="company_type" required>
+                <option value="">Select type</option>
+                <option>Private Limited</option>
+                <option>Public Limited</option>
+                <option>LLP</option>
+                <option>Partnership</option>
+                <option>Sole Proprietorship</option>
+                <option>Startup</option>
+                <option>NGO</option>
+                <option>Government</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="industry">Industry *</label>
+              <select id="industry" name="industry" required>
+                <option value="">Select industry</option>
+                <option>Technology</option>
+                <option>Finance</option>
+                <option>Healthcare</option>
+                <option>Education</option>
+                <option>Manufacturing</option>
+                <option>Retail</option>
+                <option>Marketing</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="cin">CIN number *</label>
+              <input type="text" id="cin" name="cin_number" placeholder="U72900MH2015PTC260000" required>
+            </div>
+            <div class="field">
+              <label for="gst">GST number</label>
+              <input type="text" id="gst" name="gst_number" placeholder="22AAAAA0000A1Z5">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="website">Company website</label>
+            <input type="url" id="website" name="company_website" placeholder="https://yourcompany.com">
+          </div>
+
+          <div class="field">
+            <label for="company_email">Company email *</label>
+            <input type="email" id="company_email" name="company_email" placeholder="hello@yourcompany.com" required>
+          </div>
+
+          <div class="field">
+            <label for="company_description">About the company *</label>
+            <textarea id="company_description" name="company_description" placeholder="What your company does, and the kind of interns you're looking to hire." required></textarea>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="company_size">Company size *</label>
+              <select id="company_size" name="company_size" required>
+                <option value="">Select size</option>
+                <option>1-10 Employees</option>
+                <option>11-50 Employees</option>
+                <option>51-200 Employees</option>
+                <option>201-500 Employees</option>
+                <option>500+ Employees</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="founded_year">Founded year *</label>
+              <input type="number" id="founded_year" name="founded_year" min="1900" max="2026" placeholder="2015" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><span class="section-num">02</span><h3>Recruiter / HR details</h3></div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="recruiter">Recruiter / HR name *</label>
+              <input type="text" id="recruiter" name="recruiter_name" placeholder="Priya Sharma" required>
+            </div>
+            <div class="field">
+              <label for="designation">Designation *</label>
+              <input type="text" id="designation" name="designation" placeholder="HR Manager" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="official_email">Official email ID *</label>
+            <input type="email" id="official_email" name="official_email" placeholder="priya.sharma@yourcompany.com" required>
+          </div>
+
+          <div class="field">
+            <label for="mobile">Mobile number *</label>
+            <input type="tel" id="mobile" name="mobile_number" pattern="[0-9]{10}" maxlength="10" placeholder="9876543210" required>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><span class="section-num">03</span><h3>Company address</h3></div>
+
+          <div class="field">
+            <label for="address_line1">Address line 1 *</label>
+            <input type="text" id="address_line1" name="address_line1" placeholder="Flat / building, street" required>
+          </div>
+          <div class="field">
+            <label for="address_line2">Address line 2</label>
+            <input type="text" id="address_line2" name="address_line2" placeholder="Area, landmark (optional)">
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="city">City *</label>
+              <input type="text" id="city" name="city" placeholder="Mumbai" required>
+            </div>
+            <div class="field">
+              <label for="state">State *</label>
+              <input type="text" id="state" name="state" placeholder="Maharashtra" required>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="country">Country *</label>
+              <input type="text" id="country" name="country" value="India" required>
+            </div>
+            <div class="field">
+              <label for="pin">PIN code *</label>
+              <input type="text" id="pin" name="pin_code" pattern="[0-9]{6}" maxlength="6" placeholder="400001" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-head"><span class="section-num">04</span><h3>Login &amp; verification</h3></div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="pass">Password *</label>
+              <input type="password" id="pass" name="password" minlength="8" placeholder="At least 8 characters" required>
+            </div>
+            <div class="field">
+              <label for="pass2">Confirm password *</label>
+              <input type="password" id="pass2" name="confirm_password" placeholder="Re-enter password" required>
+            </div>
+          </div>
+          <div id="passError" class="pass-error" style="display:none;">Passwords do not match.</div>
+
+          <div class="field">
+            <label for="otp">Email OTP *</label>
+            <div class="otp-row">
+              <input type="text" id="otp" name="email_otp" maxlength="6" placeholder="6-digit code" required>
+              <button type="button" id="sendOtpBtn" class="otp-btn">Send OTP</button>
+            </div>
+            <div class="hint">Enter your company email above, click "Send OTP", then paste the code you receive.</div>
+          </div>
+
+          <div class="terms-row">
+            <input type="checkbox" id="terms" name="terms">
+            <label for="terms" class="terms-label">I accept the Terms &amp; Conditions</label>
+          </div>
+        </div>
+<div class="field">
+    <label>Captcha *</label>
+
+    <div class="captcha-box">
+        <img src="captcha.php" id="captchaImage" alt="Captcha">
+
+        <button type="button" id="refreshCaptcha">
+            Refresh
+        </button>
+    </div>
+
+    <input
+        type="text"
+        id="captcha"
+        name="captcha"
+        placeholder="Enter Captcha"
+        required>
+</div>
+        <button type="submit" id="submitBtn" class="submit-btn">Create company account</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

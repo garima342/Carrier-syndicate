@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>InternHub — Internships &amp; jobs, one platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body.home { display:block; min-height:100vh; background:#F4F1EA; }
+    .home-nav {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:24px 48px; max-width:1100px; margin:0 auto;
+    }
+    .home-nav .logo-mark { width:40px; height:40px; }
+    .home-nav .brand-name { font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px; color:#10233F; }
+    .home-nav a.nav-login {
+      font-size:14px; font-weight:600; color:#10233F; text-decoration:none;
+      padding:9px 18px; border:1px solid #10233F; border-radius:8px;
+    }
+    .home-hero { text-align:center; padding:56px 24px 24px; max-width:720px; margin:0 auto; }
+    .home-hero h1 {
+      font-family:'Space Grotesk', sans-serif; font-size:40px; line-height:1.15;
+      color:#10233F; margin:0 0 16px;
+    }
+    .home-hero p { color:#6B6558; font-size:16px; line-height:1.6; }
+    .home-cards {
+      display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;
+      max-width:1100px; margin:40px auto 80px; padding:0 24px;
+    }
+    @media (max-width: 860px) { .home-cards { grid-template-columns:1fr; } }
+    .home-card {
+      background:#fff; border:1px solid #E4DFD3; border-radius:16px;
+      padding:32px 28px; display:flex; flex-direction:column; gap:14px;
+    }
+    .home-card .tag {
+      font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+      color:#B08D57;
+    }
+    .home-card h2 { font-family:'Space Grotesk', sans-serif; font-size:22px; color:#10233F; margin:0; }
+    .home-card p { color:#6B6558; font-size:14px; line-height:1.55; flex-grow:1; }
+    .home-card .actions { display:flex; gap:10px; margin-top:6px; }
+    .home-card .actions a {
+      flex:1; text-align:center; padding:10px 12px; border-radius:8px;
+      font-size:13px; font-weight:600; text-decoration:none;
+    }
+    .home-card .actions a.primary { background:#10233F; color:#fff; }
+    .home-card .actions a.secondary { background:#F4F1EA; color:#10233F; border:1px solid #E4DFD3; }
+  </style>
+</head>
+<body class="home">
+
+  <div class="home-nav">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="logo-mark">IH</div>
+      <div class="brand-name">InternHub</div>
+    </div>
+    <a class="nav-login" href="login.php">Log in</a>
+  </div>
+
+  <div class="home-hero">
+    <h1>Internships and jobs, one platform.</h1>
+    <p>InternHub connects students with verified companies — post roles, browse openings, apply, and track it all in one place.</p>
+  </div>
+
+  <div class="home-cards">
+    <div class="home-card">
+      <div class="tag">Students</div>
+      <h2>Find your next internship</h2>
+      <p>Build a profile, browse internships and jobs from verified companies, and track every application from one dashboard.</p>
+      <div class="actions">
+        <a class="primary" href="student-register.php">Register</a>
+        <a class="secondary" href="login.php?role=student">Log in</a>
+      </div>
+    </div>
+
+    <div class="home-card">
+      <div class="tag">Companies</div>
+      <h2>Hire your next intern or hire</h2>
+      <p>Post internships and jobs, review applicants, run sessions, and manage your open slots from a dedicated employer dashboard.</p>
+      <div class="actions">
+        <a class="primary" href="company-register.html">Register</a>
+        <a class="secondary" href="login.php?role=company">Log in</a>
+      </div>
+    </div>
+
+    <div class="home-card">
+      <div class="tag">Admin</div>
+      <h2>Run the platform</h2>
+      <p>Manage every company, student, and posting on InternHub — edit, verify, or remove records from one admin console.</p>
+      <div class="actions">
+        <a class="primary" href="login.php?role=admin" style="flex:none;width:100%;">Admin log in</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
