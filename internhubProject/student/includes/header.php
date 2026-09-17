@@ -4,7 +4,7 @@ $flashError = flash_error_get();
 ?>
 <header class="topbar">
   <div class="topbar-left">
-    <img src=<img src="../../logo/logo.jpeg" alt="Carrier Syndicate" style="height:36px;margin-right:10px;">
+    <img src="../logo/logo.jpeg" alt="Carrier Syndicate" style="height:36px;margin-right:10px;">
     <div class="topbar-logo"></div>
     <div class="topbar-title"><?= h($_SESSION['student_name'] ?? 'Student') ?></div>
   </div>
