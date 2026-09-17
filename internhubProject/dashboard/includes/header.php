@@ -21,6 +21,7 @@ if ($topbarLogoPath) {
 ?>
 <header class="topbar">
   <div class="topbar-left">
+    <img src="../logo/logo.jpeg" alt="Carrier Syndicate" style="height:36px;margin-right:10px;">
     <div class="topbar-logo">
       <?php if ($topbarLogoUrl): ?>
         <img src="<?= h($topbarLogoUrl) ?>" alt="Logo" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
