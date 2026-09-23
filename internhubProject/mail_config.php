@@ -17,5 +17,5 @@
 // (add it to .gitignore) since it holds a live credential.
 // ------------------------------------------------------------------
 
-define("MAIL_USERNAME", "stannes.17355@gmail.com");
-define("MAIL_PASSWORD", "ezfcfgjjwaprococ");
+define("MAIL_USERNAME", "ENTER_YOUR_EMAIL");
+define("MAIL_PASSWORD", "ENTER_YOUR_GENERATE_APP_PASSWORD_WITHOUT_SPACES");
