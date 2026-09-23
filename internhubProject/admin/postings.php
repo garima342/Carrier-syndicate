@@ -4,15 +4,63 @@ require_admin();
 
 $search = trim($_GET['q'] ?? '');
 $type = $_GET['type'] ?? '';
-if (!in_array($type, ['internship','job'], true)) $type = '';
+$company = $_GET['company'] ?? '';
 
-$sql = "SELECT p.*, c.company_name FROM postings p JOIN companies c ON c.id = p.company_id WHERE 1=1";
+/* Validate type */
+if (!in_array($type, ['internship', 'job'], true)) {
+    $type = '';
+}
+
+/* Get companies for dropdown */
+$companyStmt = $pdo->query(
+    "SELECT id, company_name
+     FROM companies
+     ORDER BY company_name ASC"
+);
+
+$companies = $companyStmt->fetchAll();
+
+/* Build postings query */
+$sql = "SELECT p.*, c.company_name
+        FROM postings p
+        JOIN companies c ON c.id = p.company_id
+        WHERE 1=1";
+
 $params = [];
-if ($type !== '') { $sql .= " AND p.type = ?"; $params[] = $type; }
-if ($search !== '') { $sql .= " AND (p.title LIKE ? OR c.company_name LIKE ?)"; $params[] = "%$search%"; $params[] = "%$search%"; }
+
+/* Type filter */
+if ($type !== '') {
+    $sql .= " AND p.type = ?";
+    $params[] = $type;
+}
+
+/* Company filter */
+if ($company !== '' && ctype_digit((string)$company)) {
+    $sql .= " AND p.company_id = ?";
+    $params[] = (int)$company;
+} else {
+    $company = '';
+}
+
+/* Search filter */
+if ($search !== '') {
+    $sql .= " AND (
+        p.title LIKE ?
+        OR c.company_name LIKE ?
+    )";
+
+    $searchValue = "%$search%";
+
+    $params[] = $searchValue;
+    $params[] = $searchValue;
+}
+
+/* Newest postings first */
 $sql .= " ORDER BY p.created_at DESC";
+
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
+
 $rows = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -34,15 +82,64 @@ $rows = $stmt->fetchAll();
       <div class="page-head"><h1>Postings</h1><p>Every internship and job across all companies.</p></div>
 
       <form class="filter-bar" method="get" action="">
-        <input type="text" name="q" placeholder="Search title or company…" value="<?= h($search) ?>">
-        <select name="type">
-          <option value="">All types</option>
-          <option value="internship" <?= $type === 'internship' ? 'selected' : '' ?>>Internships</option>
-          <option value="job" <?= $type === 'job' ? 'selected' : '' ?>>Jobs</option>
-        </select>
-        <button type="submit" class="btn btn-modify">🔍 Filter</button>
-        <?php if ($search !== '' || $type !== ''): ?><a href="postings.php" class="btn btn-danger">✕ Clear</a><?php endif; ?>
-      </form>
+
+  <!-- Search -->
+  <input
+    type="text"
+    name="q"
+    placeholder="Search title or company..."
+    value="<?= h($search) ?>"
+  >
+
+  <!-- Type -->
+  <select name="type" onchange="this.form.submit()">
+    <option value="">All Types</option>
+
+    <option
+      value="internship"
+      <?= $type === 'internship' ? 'selected' : '' ?>
+    >
+      Internship
+    </option>
+
+    <option
+      value="job"
+      <?= $type === 'job' ? 'selected' : '' ?>
+    >
+      Job
+    </option>
+  </select>
+
+  <!-- Company -->
+  <select name="company" onchange="this.form.submit()">
+    <option value="">All Companies</option>
+
+    <?php foreach ($companies as $item): ?>
+      <option
+        value="<?= (int)$item['id'] ?>"
+        <?= $company == $item['id'] ? 'selected' : '' ?>
+      >
+        <?= h($item['company_name']) ?>
+      </option>
+    <?php endforeach; ?>
+
+  </select>
+
+  <!-- Search button -->
+  <button type="submit" class="btn btn-modify">
+    🔍 Filter
+  </button>
+
+  <!-- Clear -->
+  <?php if ($search !== '' || $type !== '' || $company !== ''): ?>
+
+    <a href="postings.php" class="btn btn-danger">
+      ✕ Clear
+    </a>
+
+  <?php endif; ?>
+
+</form>
 
       <?php if (!$rows): ?>
         <div class="placeholder-box" style="min-height:160px;"><div class="ph-title">No postings found</div></div>
