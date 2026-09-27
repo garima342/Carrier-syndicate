@@ -6,7 +6,7 @@ function nav_active_a(string $file, string $current): string {
 ?>
 <aside class="sidebar">
   <div class="logo-slot">
-    <div class="logo-mark">🛠️</div>
+    <div class="logo-mark"><img src="../logo/logo.png" alt="Carrier Syndicate" class="logo-img" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
     <div class="logo-caption"><strong>Admin console</strong>Manage InternHub</div>
   </div>
   <nav class="side-nav">
