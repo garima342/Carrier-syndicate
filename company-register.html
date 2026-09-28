@@ -6,7 +6,163 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="style.css">
+
+<style>
+:root{
+  --navy:#101828;--navy2:#1d2540;--purple:#6758e8;--purple2:#8b5cf6;
+  --text:#182230;--muted:#667085;--border:#e6e8ef;--bg:#f6f7fb;--white:#fff;
+  --shadow:0 24px 70px rgba(16,24,40,.10)
+}
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;background:var(--bg);color:var(--text);
+ font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:
+ radial-gradient(circle at 75% 8%,rgba(103,88,232,.08),transparent 25%),
+ radial-gradient(circle at 15% 90%,rgba(139,92,246,.06),transparent 25%)}
+.brand-panel{
+ position:fixed;inset:0 auto 0 0;width:39%;padding:48px 5vw 42px;color:#fff;
+ display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;
+ background:
+ radial-gradient(circle at 85% 18%,rgba(139,92,246,.30),transparent 30%),
+ radial-gradient(circle at 15% 82%,rgba(103,88,232,.22),transparent 35%),
+ linear-gradient(150deg,#0d1222,#1b2340 58%,#33265f)
+}
+.brand-panel:before,.brand-panel:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.08)}
+.brand-panel:before{width:500px;height:500px;right:-310px;top:28%}
+.brand-panel:after{width:330px;height:330px;left:-230px;bottom:-170px}
+.brand-top,.ledger-list,.brand-foot{position:relative;z-index:2}
+.brand-row{display:flex;align-items:center;justify-content:space-between}
+.logo-mark img{
+  width:36px !important;
+  height:36px !important;
+  max-width:36px !important;
+  max-height:36px !important;
+  object-fit:contain !important;
+  display:block !important;
+  border-radius:8px;
+}
+.logo-mark{
+ width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
+ background:linear-gradient(135deg,#fff,rgba(255,255,255,.78));color:#29245b;
+ box-shadow:0 10px 30px rgba(0,0,0,.16);font:800 19px "Space Grotesk",sans-serif
+}
+.registry-stamp{
+ width:78px;height:78px;border:1px dashed rgba(255,255,255,.38);border-radius:50%;
+ display:grid;place-items:center;text-align:center;font-size:8px;text-transform:uppercase;
+ letter-spacing:1.5px;line-height:1.35;transform:rotate(-8deg);opacity:.8
+}
+.brand-name{margin-top:42px;font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#c9c5ff}
+.brand-headline{
+ max-width:540px;margin:18px 0 18px;font:700 clamp(40px,4.2vw,66px)/.98 "Space Grotesk",sans-serif;
+ letter-spacing:-3px
+}
+.brand-sub{max-width:500px;margin:0;color:rgba(255,255,255,.67);font-size:14px;line-height:1.8}
+.ledger-list{margin:0;padding:0;list-style:none;max-width:520px}
+.ledger-list li{
+ display:flex;gap:16px;align-items:flex-start;padding:16px 0;
+ border-top:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.72);
+ font-size:12px;line-height:1.6
+}
+.ledger-num{
+ min-width:27px;height:27px;border-radius:8px;background:rgba(255,255,255,.08);
+ display:grid;place-items:center;color:#c9c5ff;font:700 10px "Space Grotesk"
+}
+.brand-foot{font-size:12px;color:rgba(255,255,255,.52)}
+.brand-foot a{color:#fff;text-underline-offset:4px}
+.form-panel{margin-left:39%;min-height:100vh;padding:54px 6vw 80px}
+.form-wrap{max-width:820px;margin:0 auto}
+.form-eyebrow{
+ display:inline-flex;align-items:center;gap:7px;font-size:10px;font-weight:800;
+ letter-spacing:1.5px;text-transform:uppercase;color:var(--purple)
+}
+.form-eyebrow:before{content:"";width:20px;height:2px;border-radius:2px;background:var(--purple)}
+.form-title{margin:10px 0 8px;font:700 40px/1.08 "Space Grotesk",sans-serif;letter-spacing:-1.5px}
+.form-desc{margin:0 0 30px;color:var(--muted);font-size:13px;line-height:1.6}
+form{display:flex;flex-direction:column;gap:17px}
+.section{
+ position:relative;background:rgba(255,255,255,.94);border:1px solid var(--border);
+ border-radius:20px;padding:28px;box-shadow:0 8px 30px rgba(16,24,40,.035)
+}
+.section:after{content:"";position:absolute;left:0;top:28px;width:3px;height:36px;border-radius:0 5px 5px 0;background:linear-gradient(#6758e8,#9b72f5)}
+.section-head{display:flex;align-items:center;gap:11px;margin-bottom:24px}
+.section-num{
+ width:32px;height:32px;border-radius:10px;display:grid;place-items:center;
+ background:#f0eeff;color:var(--purple);font:800 10px "Space Grotesk"
+}
+.section-head h3{margin:0;font:650 18px "Space Grotesk";letter-spacing:-.2px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:17px}
+label{font-size:11px;font-weight:700;color:#344054}
+input,select,textarea{
+ width:100%;border:1px solid #dfe2e9;background:#fcfcfd;border-radius:11px;padding:12px 13px;
+ color:var(--text);font:400 13px Inter,sans-serif;outline:none;transition:all .18s
+}
+input::placeholder,textarea::placeholder{color:#a0a7b4}
+input:hover,select:hover,textarea:hover{border-color:#c9cdd7;background:#fff}
+input:focus,select:focus,textarea:focus{
+ border-color:#776be9;background:#fff;box-shadow:0 0 0 4px rgba(103,88,232,.10)
+}
+textarea{min-height:115px;resize:vertical;line-height:1.55}
+.logo-upload{
+ display:flex;align-items:center;gap:15px;padding:14px;background:#fff;
+ border:1px dashed #cfd3df;border-radius:15px;cursor:pointer;transition:.2s
+}
+.logo-upload:hover{border-color:#8278ea;background:#fbfaff;transform:translateY(-1px)}
+.logo-box{
+ width:60px;height:60px;border-radius:13px;background:linear-gradient(135deg,#f1efff,#e8e5ff);
+ color:var(--purple);display:grid;place-items:center;font-size:10px;font-weight:800;overflow:hidden
+}
+.logo-box img{width:100% !important;height:100% !important;max-width:100% !important;max-height:100% !important;object-fit:contain !important;display:block}
+.logo-upload-text .t1{font-size:13px;font-weight:750}.logo-upload-text .t2{margin-top:5px;color:var(--muted);font-size:11px}
+.otp-row{display:grid;grid-template-columns:1fr 116px;gap:9px}
+.otp-btn{
+ border:1px solid #d9d4ff;border-radius:11px;background:#f4f2ff;color:#5548c8;
+ font-weight:750;cursor:pointer;transition:.18s
+}
+.otp-btn:hover{background:#ebe8ff;border-color:#c8c2ff}
+.hint{margin-top:7px;color:#98a2b3;font-size:10.5px;line-height:1.5}
+.terms-row{display:flex;align-items:center;gap:9px;margin-top:4px}
+.terms-row input{width:16px;height:16px;accent-color:var(--purple)}
+.terms-label{font-size:11px;font-weight:550;color:#475467}
+.captcha-box{
+ display:flex;align-items:center;gap:10px;padding:9px;border:1px solid var(--border);
+ border-radius:11px;background:#fafbfc
+}
+.captcha-box img{height:46px;width:145px;object-fit:cover;border-radius:7px;border:1px solid #e4e7ec;background:#fff}
+#refreshCaptcha{
+ border:1px solid #d8dce5;background:#fff;border-radius:8px;padding:8px 11px;
+ font-size:10.5px;font-weight:700;cursor:pointer;color:#475467
+}
+#refreshCaptcha:hover{background:#f2f3f6}
+.submit-btn{
+ width:100%;border:0;border-radius:12px;padding:16px 20px;
+ background:linear-gradient(135deg,#5d55d8 0%,#7648ca 100%);color:#fff;
+ font:750 13px Inter,sans-serif;cursor:pointer;letter-spacing:.1px;
+ box-shadow:0 12px 26px rgba(103,88,232,.24);transition:.18s
+}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 16px 32px rgba(103,88,232,.29)}
+.submit-btn:active{transform:translateY(0)}
+.pass-error{font-size:11px;color:#c43232;margin-top:-7px}
+.form-status{padding:12px 14px;border-radius:11px;background:#ecfdf3;color:#087443;font-size:12px;margin-bottom:18px}
+@media(max-width:1050px){
+ .brand-panel{width:34%;padding:40px 3.5vw}.form-panel{margin-left:34%;padding:40px 4vw 60px}
+ .brand-headline{font-size:45px}
+}
+@media(max-width:800px){
+ .brand-panel{position:relative;width:100%;padding:34px 24px 30px;min-height:430px}
+ .brand-headline{font-size:43px}.ledger-list{display:none}.brand-foot{margin-top:35px}
+ .form-panel{margin-left:0;padding:30px 18px 50px}.form-title{font-size:33px}
+ .section{padding:22px;border-radius:16px}
+}
+@media(max-width:560px){
+ .field-row{grid-template-columns:1fr;gap:0}.otp-row{grid-template-columns:1fr}
+ .brand-headline{font-size:37px;letter-spacing:-2px}.registry-stamp{width:65px;height:65px}
+}
+</style>
+
 </head>
 <body>
 
@@ -14,7 +170,9 @@
   <div class="brand-panel">
     <div class="brand-top">
       <div class="brand-row">
-        <div class="logo-mark">IH</div>
+        <div class="logo-mark">
+    <img src="logo.jpeg" alt="InternHub Logo">
+</div>
         <div class="registry-stamp" aria-hidden="true">
           <span>Company<br>Registry</span>
         </div>
@@ -251,6 +409,49 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const logoInput = document.getElementById('logoInput');
+  const logoBox = document.getElementById('logoBox');
+  const logoUpload = document.querySelector('.logo-upload');
+  if (logoUpload && logoInput) {
+    logoUpload.addEventListener('click', () => logoInput.click());
+    logoInput.addEventListener('change', () => {
+      const file = logoInput.files?.[0];
+      if (!file) return;
+      if (file.size > 2 * 1024 * 1024) {
+        alert('Please choose a logo smaller than 2MB.');
+        logoInput.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = e => {
+        logoBox.innerHTML = '<img src="' + e.target.result + '" alt="Company logo preview">';
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const pass = document.getElementById('pass');
+  const pass2 = document.getElementById('pass2');
+  const passError = document.getElementById('passError');
+  function checkPasswords(){
+    if (!pass || !pass2 || !pass2.value) return;
+    const mismatch = pass.value !== pass2.value;
+    passError.style.display = mismatch ? 'block' : 'none';
+    pass2.setCustomValidity(mismatch ? 'Passwords do not match.' : '');
+  }
+  pass?.addEventListener('input', checkPasswords);
+  pass2?.addEventListener('input', checkPasswords);
+
+  const captcha = document.getElementById('captchaImage');
+  document.getElementById('refreshCaptcha')?.addEventListener('click', () => {
+    if (captcha) captcha.src = 'captcha.php?t=' + Date.now();
+  });
+});
+</script>
+
+<script src="script.js"></script>
 </body>
 </html>
