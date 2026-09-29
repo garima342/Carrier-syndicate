@@ -112,13 +112,339 @@ $copy = [
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    .role-tabs { display:flex; gap:8px; margin-bottom:24px; }
-    .role-tabs a {
-      flex:1; text-align:center; padding:10px 8px; border-radius:8px;
-      font-size:13px; font-weight:600; text-decoration:none; color:#6B6558;
-      background:#F4F1EA; border:1px solid #E4DFD3;
+    /* ============================================================
+       Carrier Syndicate — login
+       Palette: #0A1A2F  #0F2C45  #022C45  #2F4A67  + white
+       CSS only. Overrides style.css for this page.
+       ============================================================ */
+
+    :root {
+      --bg-deep:   #0A1A2F;
+      --bg-mid:    #0F2C45;
+      --bg-alt:    #022C45;
+      --accent:    #2F4A67;
+      --accent-up: #4C6E93;
+      --accent-lt: #7C9BBE;
+      --white:     #FFFFFF;
+      --paper:     #F7F9FC;
+      --ink:       #0A1A2F;
+      --ink-soft:  #4A5B70;
+      --line:      #DDE4EC;
+      --danger:    #B3341F;
+      --danger-bg: #FDF1EF;
     }
-    .role-tabs a.active { background:#10233F; color:#fff; border-color:#10233F; }
+
+    * { box-sizing: border-box; }
+
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+      overflow-x: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--ink);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---------------- LEFT : BRAND PANEL ---------------- */
+
+    .brand-panel {
+      flex: 0 0 44%;
+      max-width: 560px;
+      background:
+        radial-gradient(760px 420px at 15% 0%, rgba(76,110,147,0.30), transparent 62%),
+        radial-gradient(620px 460px at 100% 100%, rgba(2,44,69,0.85), transparent 58%),
+        var(--bg-deep);
+      color: var(--white);
+      padding: clamp(36px, 4.5vw, 60px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    /* thin hairline grid, very low opacity — adds depth without noise */
+    .brand-panel::after {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+    }
+    .brand-top { position: relative; z-index: 1; }
+
+    .brand-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px;
+      margin-bottom: clamp(48px, 9vh, 88px);
+    }
+
+    /* logo image replaces the "IH" text node */
+    .brand-panel .logo-mark {
+      width: 48px; height: 48px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      font-size: 0;
+      color: transparent;
+      text-indent: -9999px;
+      overflow: hidden;
+      background-color: var(--white);
+      background-image: url('logo_internship.jpeg');
+      background-repeat: no-repeat;
+      background-size: 150% auto;
+      background-position: 45% 5%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.45);
+    }
+
+    .registry-stamp {
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 6px;
+      padding: 7px 13px;
+      text-align: right;
+    }
+    .registry-stamp span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 9.5px;
+      font-weight: 600;
+      line-height: 1.45;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent-lt);
+    }
+
+    /* brand name -> Carrier Syndicate */
+    .brand-panel .brand-name {
+      font-size: 0;
+      color: transparent;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .brand-panel .brand-name::after {
+      content: "Carrier Syndicate";
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--accent-lt);
+    }
+
+    .brand-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(30px, 3.6vw, 44px);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.015em;
+      color: var(--white);
+      margin: 0 0 18px;
+    }
+    .brand-sub {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.68);
+      max-width: 400px;
+      margin: 0;
+    }
+
+    .brand-foot {
+      position: relative; z-index: 1;
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.55);
+      padding-top: 26px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .brand-foot a {
+      color: var(--white);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.35);
+      padding-bottom: 1px;
+      transition: border-color .18s ease;
+    }
+    .brand-foot a:hover { border-bottom-color: var(--white); }
+
+    /* ---------------- RIGHT : FORM PANEL ---------------- */
+
+    .form-panel {
+      flex: 1;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(32px, 5vw, 64px) clamp(20px, 4vw, 48px);
+    }
+    .form-wrap { width: 100%; }
+
+    /* role tabs — segmented control, HackerRank-ish */
+    .role-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 34px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 4px;
+    }
+    .role-tabs a {
+      flex: 1;
+      text-align: center;
+      padding: 9px 8px;
+      border-radius: 7px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--ink-soft);
+      transition: background .18s ease, color .18s ease, box-shadow .18s ease;
+    }
+    .role-tabs a:hover { color: var(--ink); }
+    .role-tabs a.active {
+      background: var(--bg-deep);
+      color: var(--white);
+      box-shadow: 0 2px 8px rgba(10,26,47,0.28);
+    }
+
+    .form-eyebrow {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent-up);
+      margin-bottom: 12px;
+    }
+    .form-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(24px, 3vw, 30px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0 0 10px;
+    }
+    .form-desc {
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      margin: 0 0 28px;
+    }
+
+    /* error banner */
+    .form-status.error {
+      background: var(--danger-bg);
+      border: 1px solid rgba(179,52,31,0.28);
+      border-left: 3px solid var(--danger);
+      color: var(--danger);
+      font-size: 13.5px;
+      font-weight: 500;
+      line-height: 1.5;
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin-bottom: 22px;
+    }
+
+    /* fields */
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 8px;
+      letter-spacing: .005em;
+    }
+    .field input {
+      width: 100%;
+      padding: 13px 15px;
+      font-family: inherit;
+      font-size: 14.5px;
+      color: var(--ink);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      outline: none;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .field input::placeholder { color: #9AA7B6; }
+    .field input:hover { border-color: #C3CEDB; }
+    .field input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(47,74,103,0.14);
+      background: var(--white);
+    }
+
+    .login-forgot {
+      text-align: right;
+      margin: -6px 0 24px;
+      font-size: 13px;
+    }
+    .login-forgot a {
+      color: var(--accent-up);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .login-forgot a:hover { color: var(--bg-deep); text-decoration: underline; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14.5px;
+      font-weight: 600;
+      letter-spacing: .01em;
+      color: var(--white);
+      background: var(--bg-deep);
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px -8px rgba(10,26,47,0.75);
+      transition: background .18s ease, transform .15s ease, box-shadow .18s ease;
+    }
+    .submit-btn:hover {
+      background: var(--bg-mid);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px -8px rgba(10,26,47,0.8);
+    }
+    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(47,74,103,0.3);
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+
+    @media (max-width: 960px) {
+      body { flex-direction: column; }
+      .brand-panel {
+        flex: 0 0 auto;
+        max-width: none;
+        width: 100%;
+        padding: 32px 28px 36px;
+      }
+      .brand-row { margin-bottom: 34px; }
+      .brand-headline { font-size: 30px; }
+      .brand-sub { max-width: none; }
+      .brand-foot { padding-top: 22px; margin-top: 26px; }
+      .form-panel { padding: 40px 28px 56px; }
+      .form-wrap { margin: 0 auto; }
+    }
+
+    @media (max-width: 520px) {
+      .brand-panel { padding: 26px 22px 30px; }
+      .brand-panel .logo-mark { width: 42px; height: 42px; }
+      .registry-stamp { padding: 6px 10px; }
+      .registry-stamp span { font-size: 9px; letter-spacing: .12em; }
+      .brand-headline { font-size: 26px; }
+      .brand-sub { font-size: 14px; }
+      .form-panel { padding: 32px 22px 48px; }
+      .role-tabs a { font-size: 12px; padding: 9px 4px; }
+      .field input { font-size: 16px; } /* stops iOS zoom-on-focus */
+    }
   </style>
 </head>
 <body>
