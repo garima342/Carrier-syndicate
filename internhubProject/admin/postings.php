@@ -5,10 +5,14 @@ require_admin();
 $search = trim($_GET['q'] ?? '');
 $type = $_GET['type'] ?? '';
 $company = $_GET['company'] ?? '';
+$status = $_GET['status'] ?? '';
 
-/* Validate type */
-if (!in_array($type, ['internship', 'job'], true)) {
-    $type = '';
+
+/* Validate status */
+$allowedStatuses = ['applied', 'on_hold', 'accepted', 'rejected'];
+
+if (!in_array($status, $allowedStatuses, true)) {
+    $status = '';
 }
 
 /* Get companies for dropdown */
@@ -41,6 +45,8 @@ if ($company !== '' && ctype_digit((string)$company)) {
 } else {
     $company = '';
 }
+
+
 
 /* Search filter */
 if ($search !== '') {
@@ -124,14 +130,49 @@ $rows = $stmt->fetchAll();
     <?php endforeach; ?>
 
   </select>
+<!-- Status -->
+<select name="status" onchange="this.form.submit()">
+    <option value="">All Statuses</option>
 
+    <option
+        value="applied"
+        <?= $status === 'applied' ? 'selected' : '' ?>
+    >
+        Applied
+    </option>
+
+    <option
+        value="on_hold"
+        <?= $status === 'on_hold' ? 'selected' : '' ?>
+    >
+        On Hold
+    </option>
+
+    <option
+        value="accepted"
+        <?= $status === 'accepted' ? 'selected' : '' ?>
+    >
+        Accepted
+    </option>
+
+    <option
+        value="rejected"
+        <?= $status === 'rejected' ? 'selected' : '' ?>
+    >
+        Rejected
+    </option>
+</select>
   <!-- Search button -->
   <button type="submit" class="btn btn-modify">
-    🔍 Filter
+     Filter
   </button>
 
   <!-- Clear -->
-  <?php if ($search !== '' || $type !== '' || $company !== ''): ?>
+  <?php if (
+    $search !== '' ||
+    $type !== '' ||
+    $company !== '' 
+): ?>
 
     <a href="postings.php" class="btn btn-danger">
       ✕ Clear
